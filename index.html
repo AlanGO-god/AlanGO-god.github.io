@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Velocidad</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .panel-lateral {
+            background-color: #2c3e50;
+            width: 220px;
+            min-height: 100vh;
+            padding: 30px 15px;
+        }
+
+        .panel-lateral button {
+            width: 100%;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 6px;
+            height: 45px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-inicio {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-inicio:hover {
+            background-color: #45a049;
+        }
+
+        .btn-generar {
+            background-color: #FFEB3B;
+            color: black;
+        }
+
+        .btn-generar:hover {
+            background-color: #FFD54F;
+        }
+
+        .btn-parar {
+            background-color: #F44336;
+            color: white;
+        }
+
+        .btn-parar:hover {
+            background-color: #d32f2f;
+        }
+
+        .contenido {
+            padding: 60px;
+            text-align: center;
+        }
+
+        .titulo-principal {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+
+        .limite-contenedor {
+            margin-bottom: 40px;
+        }
+
+        .limite-contenedor h4 {
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .limite-contenedor img {
+            width: 200px;
+            height: auto;
+        }
+
+        .limite-texto {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .velocidad-contenedor h4 {
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .velocidad-actual {
+            font-size: 48px;
+            font-weight: bold;
+            color: #27ae60;
+            transition: color 0.3s ease;
+        }
+
+        /* Icono del auto */
+        .icono-auto {
+            font-size: 80px;
+            color: #2c3e50;
+            margin-top: 15px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .icono-auto.exceso {
+            color: #e74c3c;
+            transform: scale(1.1);
+        }
+
+        .icono-auto.moderado {
+            color: #f39c12;
+            transform: scale(1.05);
+        }
+
+        .icono-auto.normal {
+            color: #27ae60;
+            transform: scale(1.0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Panel lateral -->
+        <div class="panel-lateral d-flex flex-column align-items-center">
+            <button class="btn-inicio">Inicio</button>
+            <button class="btn-generar">Generar una nueva velocidad</button>
+            <button class="btn-parar">Parar la simulación</button>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="contenido flex-grow-1">
+            <h1 class="titulo-principal">SIMULADOR DE VELOCIDAD</h1>
+
+            <div class="limite-contenedor">
+                <h4>LÍMITE DE VELOCIDAD</h4>
+                <img src="Limite_60.png" alt="Límite de Velocidad">
+                <p class="limite-texto">Máximo 60 km/h</p>
+            </div>
+
+            <div class="velocidad-contenedor">
+                <!--h4>VELOCIDAD ACTUAL</h4-->
+                <div id="velocidad" class="velocidad-actual"><!--0 km/h--></div>
+                <i id="iconoAuto" class="bi bi-car-front-fill icono-auto normal"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btnGenerar = document.querySelector('.btn-generar');
+        const lblVelocidad = document.getElementById('velocidad');
+        const iconoAuto = document.getElementById('iconoAuto');
+
+        btnGenerar.addEventListener('click', () => {
+            const velocidad = Math.floor(Math.random() * 201);
+            lblVelocidad.textContent = velocidad + " km/h";
+
+            // Cambiar color del texto y del ícono según la velocidad
+            if (velocidad <= 60) {
+                lblVelocidad.style.color = "#27ae60";
+                iconoAuto.className = "bi bi-car-front-fill icono-auto normal";
+            } else if (velocidad <= 80) {
+                lblVelocidad.style.color = "#f39c12";
+                iconoAuto.className = "bi bi-car-front-fill icono-auto moderado";
+            } else {
+                lblVelocidad.style.color = "#e74c3c";
+                iconoAuto.className = "bi bi-car-front-fill icono-auto exceso";
+                console.log("¡ADVERTENCIA! Velocidad excedida:", velocidad, "km/h (Límite: 60 km/h)");
+            }
+        });
+    </script>
+</body>
+</html>
